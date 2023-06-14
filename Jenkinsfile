@@ -8,10 +8,9 @@ pipeline {
       }
     }
 
-    stage('Run command') {
+    stage('Build Image') {
       steps {
-        sh 'ls -la'
-        sh 'echo "Hello, Jenkins!"'
+        sh 'docker build -t nginx_test .'
       }
     }
   }
