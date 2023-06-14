@@ -13,7 +13,7 @@ pipeline {
         script {
           def dockerHubCredentialsId = 'DockerHub_Credentials'
           def dockerImage = docker.build("alexsimple/nginx")
-          withDockerRegistry([credentialsId: dockerHubCredentialsId, url: '']) {
+          withDockerRegistry([credentialsId: dockerHubCredentialsId, url: 'https://index.docker.io/v1/']) {
             docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-token') {
               dockerImage.push()
             }
