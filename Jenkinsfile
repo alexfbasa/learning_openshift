@@ -2,25 +2,36 @@ pipeline {
   agent any
 
   stages {
-    stage('Build') {
+    stage('Clone repository') {
       steps {
-        sh 'docker build -t your-image-name .'
+        git 'https://github.com/alexfbasa/learning_openshift.git'
       }
     }
-    stage('Push') {
+
+    stage('Build Docker image') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'your-registry-credentials-id', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-          sh "docker login -u $USERNAME -p $PASSWORD your-registry-url"
-          sh 'docker push your-image-name'
+        script {
+          def dockerHubCredentialsId = 'DockerHub_Credentials'
+          def dockerImage = docker.build("alexsimple/nginx")
+          withDockerRegistry([credentialsId: dockerHubCredentialsId, url: '']) {
+            docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-token') {
+              dockerImage.push()
+            }
+          }
         }
       }
     }
+
     stage('Deploy') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'your-openshift-credentials-id', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-          sh 'oc login your-openshift-endpoint -u $USERNAME -p $PASSWORD'
-          sh 'oc project your-project'
-          sh 'oc apply -f your-deployment-config.yaml'
+        withCredentials([string(credentialsId: 'OpenShift_Credentials', variable: 'TOKEN')]) {
+          script {
+            sh '''
+              oc login https://192.168.99.100:8443 --token $TOKEN --insecure-skip-tls-verify
+              oc project "My Project"
+              oc apply -f openshift-template.yaml
+            '''
+          }
         }
       }
     }
