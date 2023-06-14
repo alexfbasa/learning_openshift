@@ -1,11 +1,6 @@
 pipeline {
   agent any
 
-  tools {
-    // Define the Git installation
-    git 'git'
-  }
-
   stages {
     stage('Clone repository') {
       steps {
@@ -13,6 +8,11 @@ pipeline {
       }
     }
 
-    // Other stages in your pipeline...
+    stage('Run command') {
+      steps {
+        sh 'ls -la'
+        sh 'echo "Hello, Jenkins!"'
+      }
+    }
   }
 }
