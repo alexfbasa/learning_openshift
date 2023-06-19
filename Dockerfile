@@ -7,7 +7,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d/
 
 # Copy your static files to serve with Nginx
-COPY html /usr/share/nginx/html
+COPY nginx-html /usr/share/nginx/html
 
 # Expose the Nginx HTTP port
 EXPOSE 80

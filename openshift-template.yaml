@@ -24,15 +24,15 @@ objects:
               volumeMounts:
                 - name: config-volume
                   mountPath: /etc/nginx/conf.d/
-                - name: html-volume
-                  mountPath: /usr/share/nginx/html
+                - name: nginx-html-volume
+                  mountPath: /usr/share/nginx/nginx-html
           volumes:
             - name: config-volume
               configMap:
                 name: nginx-config
-            - name: html-volume
+            - name: nginx-html-volume
               configMap:
-                name: nginx-html
+                name: nginx-nginx-html
   - kind: Service
     apiVersion: v1
     metadata:
