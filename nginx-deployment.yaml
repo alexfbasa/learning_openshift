@@ -1,5 +1,15 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: nginx-deployment
 spec:
+  replicas: 1
+  selector:
+    app: nginx
   template:
+    metadata:
+      labels:
+        app: nginx
     spec:
       containers:
         - name: nginx-container
