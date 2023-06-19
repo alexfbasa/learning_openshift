@@ -6,7 +6,7 @@ objects:
   - kind: DeploymentConfig
     apiVersion: apps.openshift.io/v1
     metadata:
-      name: nginx-app
+      name: nginx-deployment
     spec:
       replicas: 1
       selector:
@@ -25,14 +25,14 @@ objects:
                 - name: config-volume
                   mountPath: /etc/nginx/conf.d/
                 - name: nginx-html-volume
-                  mountPath: /usr/share/nginx/nginx-html
+                  mountPath: /usr/share/nginx/html
           volumes:
             - name: config-volume
               configMap:
                 name: nginx-config
             - name: nginx-html-volume
               configMap:
-                name: nginx-nginx-html
+                name: nginx-html
   - kind: Service
     apiVersion: v1
     metadata:
