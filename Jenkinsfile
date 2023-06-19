@@ -17,7 +17,7 @@ pipeline {
     stage('Create ConfigMap') {
       steps {
         script {
-          sh 'oc create configmap nginx-config --from-file=path/to/nginx-config-files'
+          sh 'oc create configmap nginx-config --from-file=nginx-config'
         }
       }
     }
