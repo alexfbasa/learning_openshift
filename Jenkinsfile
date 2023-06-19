@@ -19,7 +19,7 @@ pipeline {
           // Use the TOKEN variable for authentication with OpenShift
           sh "oc login https://192.168.99.101:8443 --token ${TOKEN} --insecure-skip-tls-verify"
           sh "oc project cp-0001"
-          sh "oc apply -f openshift-template.yaml"
+          sh "oc apply -f openshift-templatde.yaml"
         }
       }
     }
