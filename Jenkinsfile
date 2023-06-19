@@ -21,6 +21,7 @@ pipeline {
           sh "oc login https://192.168.99.101:8443 --token ${TOKEN} --insecure-skip-tls-verify"
           sh "oc project cp-0001"
           sh "oc apply -f openshift-template.yaml"
+          sh "oc apply -f nginx-deployment.yaml"
 
           // Wait for the deployment to complete
           sh "oc rollout status dc/nginx-deployment --watch=true"
