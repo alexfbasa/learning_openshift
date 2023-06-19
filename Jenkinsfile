@@ -21,6 +21,10 @@ pipeline {
           sh 'echo "---" >> nginx-config.yaml'
           sh 'oc create configmap nginx-config-update --from-file=nginx-config --dry-run=client -o yaml >> nginx-config.yaml'
           sh 'oc apply -f nginx-config.yaml'
+          sh 'oc create configmap nginx-html --from-file=nginx-html'
+          sh 'echo "---" >> nginx-html.yaml'
+          sh 'oc create configmap nginx-html-update --from-file=nginx-html --dry-run=client -o yaml >> nginx-html.yaml'
+          sh 'oc apply -f nginx-html.yaml'
         }
       }
     }
