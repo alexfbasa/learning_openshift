@@ -17,7 +17,7 @@ pipeline {
     stage('Create ConfigMap') {
       steps {
         script {
-          sh 'oc get configmap nginx-config -o yaml --export > nginx-config.yaml'
+          sh 'oc get configmap nginx-config -o yaml > nginx-config.yaml'
           sh 'echo "---" >> nginx-config.yaml'
           sh 'oc create configmap nginx-config-update --from-file=path/to/nginx-config-files --dry-run=client -o yaml >> nginx-config.yaml'
           sh 'oc apply -f nginx-config.yaml'
